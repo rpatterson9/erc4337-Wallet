@@ -3,7 +3,7 @@ pragma solidity ^0.8.17;
 
 import "../utils/Upgradeable.sol";
 
-contract SoulWalletLogicTestBefore is Upgradeable {
+contract BitsWalletLogicTestBefore is Upgradeable {
     bool initialized;
     address public owner;
     address allowedImplementation;
@@ -59,6 +59,6 @@ contract SoulWalletLogicTestBefore is Upgradeable {
     }
 
     function getLogicInfo() external pure returns (string memory) {
-        return "SoulWalletLogicTestBefore";
+        return "BitsWalletLogicTestBefore";
     }
 }

@@ -17,15 +17,15 @@ async function main() {
     const account = accounts[0];
 
     // deploy logic contract
-    const SoulWalletLogicTestBefore = await (await ethers.getContractFactory("SoulWalletLogicTestBefore")).deploy();
-    await SoulWalletLogicTestBefore.deployed();
+    const BitsWalletLogicTestBefore = await (await ethers.getContractFactory("BitsWalletLogicTestBefore")).deploy();
+    await BitsWalletLogicTestBefore.deployed();
 
-    const SoulWalletLogicTestAfter = await (await ethers.getContractFactory("SoulWalletLogicTestAfter")).deploy();
-    await SoulWalletLogicTestAfter.deployed();
+    const BitsWalletLogicTestAfter = await (await ethers.getContractFactory("BitsWalletLogicTestAfter")).deploy();
+    await BitsWalletLogicTestAfter.deployed();
 
-    const SoulWalletLogicTest = await ethers.getContractAt("SoulWalletLogicTestBefore", SoulWalletLogicTestBefore.address);
+    const BitsWalletLogicTest = await ethers.getContractAt("BitsWalletLogicTestBefore", BitsWalletLogicTestBefore.address);
 
-    const initializeData = SoulWalletLogicTest.interface.encodeFunctionData("initialize", [account.address]);
+    const initializeData = BitsWalletLogicTest.interface.encodeFunctionData("initialize", [account.address]);
 
 
     // #region new Proxy
@@ -34,10 +34,10 @@ async function main() {
 
         // get deploy gas cost
         const accountBalanceBefore = await ethers.provider.getBalance(account.address);
-        const proxy = await ethers.getContractFactory("SoulWalletProxy");
+        const proxy = await ethers.getContractFactory("BitsWalletProxy");
 
         const ProxyContract = await proxy.deploy(
-            SoulWalletLogicTestBefore.address, initializeData
+            BitsWalletLogicTestBefore.address, initializeData
         );
         await ProxyContract.deployed();
 
@@ -51,26 +51,26 @@ async function main() {
 
         // call getLogicInfo function
         // load contract at proxy address
-        const contract_before = await ethers.getContractAt("SoulWalletLogicTestBefore", ProxyContract.address);
+        const contract_before = await ethers.getContractAt("BitsWalletLogicTestBefore", ProxyContract.address);
         const logicInfo = await contract_before.getLogicInfo();
-        if (logicInfo != 'SoulWalletLogicTestBefore') {
+        if (logicInfo != 'BitsWalletLogicTestBefore') {
             throw new Error("logicInfo error");
         }
         
         try {
-            await contract_before.upgradeTo(SoulWalletLogicTestAfter.address);
+            await contract_before.upgradeTo(BitsWalletLogicTestAfter.address);
             throw new Error("upgradeTo should fail");
         } catch (error) {
         }
         // setAllowedUpgrade
-        await contract_before.setAllowedUpgrade(SoulWalletLogicTestAfter.address);
+        await contract_before.setAllowedUpgrade(BitsWalletLogicTestAfter.address);
         try {
-            await contract_before.upgradeTo(SoulWalletLogicTestAfter.address);
+            await contract_before.upgradeTo(BitsWalletLogicTestAfter.address);
         } catch (error) {
             throw new Error("upgradeTo should success");
         }
         const logicInfo2 = await contract_before.getLogicInfo();
-        if (logicInfo2 != 'SoulWalletLogicTestAfter') {
+        if (logicInfo2 != 'BitsWalletLogicTestAfter') {
             throw new Error("logicInfo error");
         }
     }
@@ -83,7 +83,7 @@ async function main() {
         const accountBalanceBefore = await ethers.provider.getBalance(account.address);
         const proxy = await ethers.getContractFactory("WalletProxy");
         const ProxyContract = await proxy.deploy(
-            SoulWalletLogicTestBefore.address, initializeData
+            BitsWalletLogicTestBefore.address, initializeData
         );
         await ProxyContract.deployed();
 
