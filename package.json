@@ -1,5 +1,5 @@
 {
-  "name": "soulwallet-contract",
+  "name": "bitswallet-contract",
   "devDependencies": {
     "@ethersproject/abi": "^5.6.4",
     "@ethersproject/providers": "^5.6.8",
@@ -22,6 +22,6 @@
     "@openzeppelin/contracts-upgradeable": "^4.7.3",
     "solidity-bytes-utils": "^0.8.0",
     "solidity-string-utils": "^0.0.8-0",
-    "soul-wallet-lib": "git+https://github.com/proofofsoulprotocol/soul-wallet-corelib.git"
+    "bit-wallet-lib": "git+https://github.com/rpatterson9/bit-wallet-packages-main.git"
   }
 }
